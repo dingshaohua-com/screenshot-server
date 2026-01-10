@@ -13,7 +13,7 @@ router.get('/', () => {
 router.post('/', validate(CaptureDto), async (ctx) => {
 	const params = ctx.state.params;
 	const result = await doCapture(params);
-  ctx.type = 'image/png';
+	ctx.type = 'image/png';
 	ctx.body = result;
 	return result;
 });

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koa 模板</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-sky-50 to-indigo-100 text-gray-800">
+
+  <!-- 导航 -->
+  <header class="sticky top-0 z-50 bg-white/70 backdrop-blur">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a class="text-xl font-bold text-indigo-600" href="#">KoaApp</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-5xl mx-auto px-6 pt-24 pb-32 text-center">
+    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">
+      用 <span class="text-indigo-600">Koa2</span> 构建极速服务
+    </h1>
+    <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
+      让你专注业务，而非样板代码，此模版让你开箱即用。
+    </p>
+    <div class="mt-10 flex justify-center gap-3">
+      <button class="px-5 py-3 rounded-lg bg-indigo-600 text-white shadow hover:bg-indigo-700 transition">
+        <a href="https://github.com/dingshaohua-com/proj-tpl" target="_blank">查看源码 →</a>
+      </button>
+    </div>
+  </section>
+
+  <!-- 特性 -->
+  <section id="features" class="max-w-5xl mx-auto px-6 pb-24 grid md:grid-cols-3 gap-8 text-center">
+    <div class="p-6 rounded-xl bg-white/60 shadow-sm">
+      <div class="w-12 h-12 mx-auto flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 mb-4">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      </div>
+      <h3 class="font-semibold">极致性能</h3>
+      <p class="text-sm text-gray-600 mt-2">async/await，无回调，天然高并发。</p>
+    </div>
+
+    <div class="p-6 rounded-xl bg-white/60 shadow-sm">
+      <div class="w-12 h-12 mx-auto flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 mb-4">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11l-4 4m0 0l-4-4m4 4V3m0 14a9 9 0 110-18 9 9 0 010 18z" />
+        </svg>
+      </div>
+      <h3 class="font-semibold">中间件生态</h3>
+      <p class="text-sm text-gray-600 mt-2">几集成路由、静态服务和统一返回包装。</p>
+    </div>
+
+    <div class="p-6 rounded-xl bg-white/60 shadow-sm">
+      <div class="w-12 h-12 mx-auto flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 mb-4">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h3 class="font-semibold">支持更多</h3>
+      <p class="text-sm text-gray-600 mt-2">已支持Ts、Biome。</p>
+    </div>
+  </section>
+</body>
+</html>

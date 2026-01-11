@@ -10,11 +10,385 @@
         display: inline-block;
         position: relative;
       }
+
+      /* RichTextView 组件样式 */
+      .rich-text-view {
+        line-height: 2.5;
+        white-space: pre-wrap;
+      }
+      .rich-text-view p {
+        margin: 0;
+      }
+      .rich-text-view img {
+        display: initial;
+        vertical-align: initial;
+      }
+      /* 点强调样式 */
+      .rich-text-view .dot {
+        -webkit-text-emphasis: dot;
+        text-emphasis: dot;
+        -webkit-text-emphasis-position: under;
+        text-emphasis-position: under left;
+      }
+      /* 波浪下划线样式 */
+      .rich-text-view .wavy {
+        text-decoration: underline wavy;
+      }
+      /* 下划线样式 */
+      .rich-text-view u {
+        white-space: pre-wrap !important;
+      }
+      .rich-text-view [data-tiptype="question-blank_filling"] {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        min-height: 1.5em;
+        margin: 0 4px;
+        line-height: 1.5;
+        text-align: center;
+        vertical-align: text-bottom;
+        border-bottom: 1px solid #333;
+      }
+      .rich-text-view [data-tiptype="question-blank_filling"]::after {
+        position: absolute;
+        right: 0;
+        bottom: 2px;
+        left: 0;
+        display: inline-block;
+        line-height: 1;
+        content: attr(data-index);
+      }
+
+      /* 大屏讲解场景：填空题数字圆圈样式（蓝色圆圈） */
+      /* 使用 em 单位，让圆圈大小随字体大小自动缩放 */
+      .lecture-layout-container
+        .rich-text-view
+        [data-tiptype="question-blank_filling"][data-index]::after,
+      .lecture-layout-container
+        .rich-text-math
+        [data-tiptype="question-blank_filling"][data-index]::after,
+      .lecture-layout-container
+        .lecture-content-wrapper
+        .rich-text-view
+        [data-tiptype="question-blank_filling"][data-index]::after,
+      .lecture-layout-container
+        .lecture-content-wrapper
+        .rich-text-math
+        [data-tiptype="question-blank_filling"][data-index]::after {
+        border: 1px solid #58c4fa !important;
+        width: 1.25em !important;
+        height: 1.25em !important;
+        margin: 0 auto;
+        line-height: 1.25em !important;
+        border-radius: 50% !important;
+        background: linear-gradient(
+            0deg,
+            rgba(88, 196, 250, 0.15) 0%,
+            rgba(88, 196, 250, 0.15) 100%
+          ),
+          #fff !important;
+        color: #0a8ac2 !important;
+        text-align: center;
+        font-size: 0.5em !important;
+        font-weight: 500;
+        position: absolute;
+        right: 0;
+        bottom: 2px;
+        left: 0;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        content: attr(data-index);
+      }
+
+      /* 特殊情况：如果只有一个空且是最后一个，不显示数字圆圈 */
+      .lecture-layout-container
+        .rich-text-view
+        [data-index="1"][data-tiptype="question-blank_filling"]:last-of-type::after,
+      .lecture-layout-container
+        .rich-text-math
+        [data-index="1"][data-tiptype="question-blank_filling"]:last-of-type::after,
+      .lecture-layout-container
+        .lecture-content-wrapper
+        .rich-text-view
+        [data-index="1"][data-tiptype="question-blank_filling"]:last-of-type::after,
+      .lecture-layout-container
+        .lecture-content-wrapper
+        .rich-text-math
+        [data-index="1"][data-tiptype="question-blank_filling"]:last-of-type::after {
+        content: "" !important;
+        border: none !important;
+        background: transparent !important;
+        width: auto !important;
+        height: auto !important;
+      }
+      /* 标题样式 */
+      .rich-text-view h1,
+      .rich-text-view h2,
+      .rich-text-view h3,
+      .rich-text-view h4,
+      .rich-text-view h5,
+      .rich-text-view h6 {
+        margin: 5px 0 !important;
+        font-weight: 500;
+        line-height: 1.1;
+        text-wrap: pretty;
+      }
+      .rich-text-view h1 {
+        font-size: 1.4rem;
+      }
+      .rich-text-view h2 {
+        font-size: 1.2rem;
+      }
+      .rich-text-view h3 {
+        font-size: 1.1rem;
+      }
+      .rich-text-view h4,
+      .rich-text-view h5,
+      .rich-text-view h6 {
+        font-size: 1rem;
+      }
+      /* 自定义样式 */
+      .rich-text-view .solid {
+        margin: 20px 0;
+        border-top: 1px solid black !important;
+      }
+      .rich-text-view .dashed {
+        margin: 20px 0;
+        border-top: 1px dashed black !important;
+      }
+      .rich-text-view .underline {
+        margin-top: 20px;
+        border-top: 1px solid black !important;
+      }
+      .rich-text-view .fill-blank {
+        display: inline-block;
+        width: 6em;
+        border-bottom: 1px solid black;
+      }
+      .rich-text-view table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .rich-text-view th,
+      .rich-text-view td {
+        padding: 2px 8px;
+        border: 1px solid #ddd;
+      }
+      .rich-text-view th {
+        text-align: left;
+        background-color: #f2f2f2;
+      }
+      /* 数学公式和普通文字的横向间距 */
+      .rich-text-view .katex {
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+      /* 数学公式上下外边距，防止换行时两行公式挤在一起 */
+      .rich-text-view .katex .base {
+        margin-top: 4px;
+        margin-bottom: 4px;
+
+        /* 🔧 修复：公式内部不应该换行，保持 nowrap */
+        white-space: nowrap;
+        width: auto;
+      }
+
+      /* 注意: 这里不能使用 `white-space: normal;`, `y = \sqrt[3]{x^{3}}` 这样的公式会异常 */
+      .rich-text-view .katex .sqrt {
+        white-space: nowrap;
+        width: fit-content;
+      }
+
+      /* 大屏讲解场景：增强数学公式渲染质量 */
+      .lecture-layout-container .rich-text-view .katex,
+      .lecture-layout-container .rich-text-math .katex {
+        /* 强制使用清晰渲染，防止缩放时出现模糊 */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: geometricPrecision;
+      }
+
+      /* 🔧 大屏讲解场景下，KaTeX 公式允许内部换行展示 */
+      /* 允许 katex 容器本身可以换行 */
+      .lecture-layout-container .katex {
+        display: inline-block !important;
+        max-width: 100% !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: anywhere !important;
+        vertical-align: baseline !important;
+      }
+      /* 允许公式基础容器可以换行 */
+      .lecture-layout-container .katex .base {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: anywhere !important;
+        max-width: 100% !important;
+      }
+      /* 允许运算符和关系符前后可以换行 */
+      .lecture-layout-container .katex .mbin,
+      .lecture-layout-container .katex .mrel,
+      .lecture-layout-container .katex .mop,
+      .lecture-layout-container .katex .mpunct {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: anywhere !important;
+      }
+      /* 保持关键结构不换行，确保分数、根号等不会断裂 */
+      /* 注意：.frac-line 已从此规则移除，单独处理以确保正确显示 */
+      .lecture-layout-container .katex .mfrac,
+      .lecture-layout-container .katex .sqrt,
+      .lecture-layout-container .katex .vlist,
+      .lecture-layout-container .katex .vlist-t,
+      .lecture-layout-container .katex .vlist-r,
+      .lecture-layout-container .katex .strut {
+        white-space: nowrap !important;
+        word-wrap: normal !important;
+        overflow-wrap: normal !important;
+        width: auto !important;
+      }
+      /* 允许其他元素在必要时换行 */
+      .lecture-layout-container .katex span,
+      .lecture-layout-container .katex .mord,
+      .lecture-layout-container .katex .minner,
+      .lecture-layout-container .katex .mopen,
+      .lecture-layout-container .katex .mclose {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: anywhere !important;
+        max-width: 100% !important;
+      }
+
+      /* 🔧 答案解析区域：恢复 KaTeX 默认样式（不换行） */
+      /* 使用具体的元素选择器，提高优先级，确保能覆盖通用规则 */
+
+      /* 答案解析区域的 KaTeX 容器 */
+      .lecture-layout-container .answer-section .katex,
+      .lecture-layout-container .explanation-section .katex,
+      .lecture-layout-container .answer-and-explanation-section .katex {
+        white-space: nowrap !important;
+        max-width: none !important;
+      }
+
+      /* 答案解析区域的所有 KaTeX 内部元素 - 使用具体选择器提高优先级 */
+      .lecture-layout-container .answer-section .katex span,
+      .lecture-layout-container .answer-section .katex .base,
+      .lecture-layout-container .answer-section .katex .mord,
+      .lecture-layout-container .answer-section .katex .minner,
+      .lecture-layout-container .answer-section .katex .mopen,
+      .lecture-layout-container .answer-section .katex .mclose,
+      .lecture-layout-container .answer-section .katex .mbin,
+      .lecture-layout-container .answer-section .katex .mrel,
+      .lecture-layout-container .answer-section .katex .mop,
+      .lecture-layout-container .answer-section .katex .mpunct,
+      .lecture-layout-container .explanation-section .katex span,
+      .lecture-layout-container .explanation-section .katex .base,
+      .lecture-layout-container .explanation-section .katex .mord,
+      .lecture-layout-container .explanation-section .katex .minner,
+      .lecture-layout-container .explanation-section .katex .mopen,
+      .lecture-layout-container .explanation-section .katex .mclose,
+      .lecture-layout-container .explanation-section .katex .mbin,
+      .lecture-layout-container .explanation-section .katex .mrel,
+      .lecture-layout-container .explanation-section .katex .mop,
+      .lecture-layout-container .explanation-section .katex .mpunct,
+      .lecture-layout-container .answer-and-explanation-section .katex span,
+      .lecture-layout-container .answer-and-explanation-section .katex .base,
+      .lecture-layout-container .answer-and-explanation-section .katex .mord,
+      .lecture-layout-container .answer-and-explanation-section .katex .minner,
+      .lecture-layout-container .answer-and-explanation-section .katex .mopen,
+      .lecture-layout-container .answer-and-explanation-section .katex .mclose,
+      .lecture-layout-container .answer-and-explanation-section .katex .mbin,
+      .lecture-layout-container .answer-and-explanation-section .katex .mrel,
+      .lecture-layout-container .answer-and-explanation-section .katex .mop,
+      .lecture-layout-container .answer-and-explanation-section .katex .mpunct {
+        white-space: nowrap !important;
+        word-wrap: normal !important;
+        overflow-wrap: normal !important;
+        max-width: none !important;
+      }
+
+      /* 大屏讲解场景：根号符号增强 */
+      .lecture-layout-container .rich-text-view .katex .sqrt,
+      .lecture-layout-container .rich-text-math .katex .sqrt {
+        /* 确保根号线条不会断裂 */
+        -webkit-font-smoothing: antialiased;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+        /* 🔧 确保根号完整显示 */
+        display: inline-block;
+        position: relative;
+        overflow: visible !important;
+      }
+
+      /* 根号上方的横线样式 */
+      .lecture-layout-container .rich-text-view .katex .sqrt-line,
+      .lecture-layout-container .rich-text-math .katex .sqrt-line {
+        border-top-style: solid;
+        border-top-width: 0.04em;
+        display: block;
+        width: 100%;
+      }
+
+      /* 根号符号（SVG）样式 */
+      .lecture-layout-container .rich-text-view .katex .sqrt svg,
+      .lecture-layout-container .rich-text-math .katex .sqrt svg {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* 大屏讲解场景：分数线增强 */
+      .lecture-layout-container .rich-text-view .katex .frac-line,
+      .lecture-layout-container .rich-text-math .katex .frac-line {
+        /* 确保分数线渲染清晰 */
+        min-height: 1px;
+        border-bottom-width: 0.08em;
+        border-bottom-style: solid;
+        /* 🔧 关键修复：确保分数线有宽度 */
+        display: inline-block;
+        width: 100%;
+        /* 防止换行影响 */
+        white-space: nowrap;
+      }
+
+      .rich-text-view .katex .base .formula-space-auto-break {
+        white-space: normal;
+        width: auto;
+      }
+
+      .rich-text-view .katex .base .formula-space-nowrap {
+        white-space: nowrap;
+        width: fit-content;
+      }
     </style>
   </head>
 
-  <body>
-    {{html_content}}
-    {{tailwind_script}}
+  <body style="zoom: 1.25;">
+    <div class="relative flex h-full w-full flex-col">
+      <style>
+        /* 🔧 圖片隨縮放變化：使用 zoom 屬性（不會溢出遮擋其他內容） */
+        /* 🔧 優化：使用 max() 確保圖片縮放最小值為 1 */
+        .lecture-content-wrapper img,
+        .lecture-content-wrapper video,
+        .lecture-content-wrapper svg:not(.icon),
+        .lecture-content-wrapper .media-preview,
+        .lecture-content-wrapper .thumbnail-image,
+        .lecture-content-wrapper .answer-section img,
+        .lecture-content-wrapper .explanation-section img,
+        .lecture-content-wrapper .lecture-question-answer img {
+          zoom: max(1, var(--content-scale, 1)) !important;
+        }
+        /* 確保圖片不會超出容器 */
+        .lecture-content-wrapper img,
+        .lecture-content-wrapper video {
+          max-width: 100% !important;
+          height: auto !important;
+        }
+      </style>
+      {{html_content}}
+      {{tailwind_script}}
+    </div>
   </body>
 </html>

@@ -1,66 +1,63 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Koa 模板</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gradient-to-br from-sky-50 to-indigo-100 text-gray-800">
-
-  <!-- 导航 -->
-  <header class="sticky top-0 z-50 bg-white/70 backdrop-blur">
-    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a class="text-xl font-bold text-indigo-600" href="#">KoaApp</a>
-    </div>
-  </header>
-
-  <!-- Hero -->
-  <section class="max-w-5xl mx-auto px-6 pt-24 pb-32 text-center">
-    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">
-      用 <span class="text-indigo-600">Koa2</span> 构建极速服务
-    </h1>
-    <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
-      让你专注业务，而非样板代码，此模版让你开箱即用。
-    </p>
-    <div class="mt-10 flex justify-center gap-3">
-      <button class="px-5 py-3 rounded-lg bg-indigo-600 text-white shadow hover:bg-indigo-700 transition">
-        <a href="https://github.com/dingshaohua-com/proj-tpl" target="_blank">查看源码 →</a>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>截图演示</title>
+    <style>
+      html {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body class="w-full h-full">
+    <div class="flex flex-col w-full h-full">
+      <button
+        class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg shadow-md transition duration-300 cursor-pointer w-40 mb-6"
+      >
+        开始截图
       </button>
-    </div>
-  </section>
 
-  <!-- 特性 -->
-  <section id="features" class="max-w-5xl mx-auto px-6 pb-24 grid md:grid-cols-3 gap-8 text-center">
-    <div class="p-6 rounded-xl bg-white/60 shadow-sm">
-      <div class="w-12 h-12 mx-auto flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 mb-4">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
+      <!-- 需要被截图的元素区域 -->
+      <div class="box text-red-500 bg-blue-100">
+        <h1 class="font-bold text-xl">这是标题</h1>
+        <div>这是普通文字</div>
+        <img
+          src="https://s41.ax1x.com/2026/01/09/pZwLWOf.png"
+          alt="pZwLWOf.png"
+          width="200"
+        />
       </div>
-      <h3 class="font-semibold">极致性能</h3>
-      <p class="text-sm text-gray-600 mt-2">async/await，无回调，天然高并发。</p>
-    </div>
 
-    <div class="p-6 rounded-xl bg-white/60 shadow-sm">
-      <div class="w-12 h-12 mx-auto flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 mb-4">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11l-4 4m0 0l-4-4m4 4V3m0 14a9 9 0 110-18 9 9 0 010 18z" />
-        </svg>
-      </div>
-      <h3 class="font-semibold">中间件生态</h3>
-      <p class="text-sm text-gray-600 mt-2">几集成路由、静态服务和统一返回包装。</p>
+      <!-- 截图展示区域 -->
+      <div
+        class="capture-img border-2 border-gray-300 mt-6 overflow-auto flex-1"
+      ></div>
     </div>
 
-    <div class="p-6 rounded-xl bg-white/60 shadow-sm">
-      <div class="w-12 h-12 mx-auto flex items-center justify-center rounded-full bg-indigo-100 text-indigo-600 mb-4">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      </div>
-      <h3 class="font-semibold">支持更多</h3>
-      <p class="text-sm text-gray-600 mt-2">已支持Ts、Biome。</p>
-    </div>
-  </section>
-</body>
+    <script src="./capture-tpl/tailwindcss.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module">
+      async function startCapture() {
+        const htmlStr = document.querySelector(".box").outerHTML;
+        const params = {
+          htmlStr,
+        };
+        const { data } = await axios.post("/api/capture", params, {
+          responseType: "blob", // 告诉 axios 响应是二进制数据
+        });
+        const url = URL.createObjectURL(data);
+        const img = document.createElement("img");
+        img.src = url;
+        img.onload = () => URL.revokeObjectURL(url);
+        return { imgNode: img, imgSrc: url };
+      }
+
+      document.querySelector("button").onclick = async () => {
+        const { imgNode } = await startCapture();
+        document.querySelector(".capture-img").appendChild(imgNode);
+      };
+    </script>
+  </body>
 </html>

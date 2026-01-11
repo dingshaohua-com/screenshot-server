@@ -13,6 +13,10 @@ const templateHtml = fs.readFileSync(
   join(ROOT_PATH, "public", "capture-tpl", "template.html"),
   "utf-8"
 );
+const boardStrokePlyer = fs.readFileSync(
+  join(ROOT_PATH, "public", "capture-tpl", "board-stroke-plyer.js"),
+  "utf-8"
+);
 
 // 把 Tailwind 运行时内嵌，又不想再踩 escape 的坑(引号冲突、换行丢失)，用 CDATA 包装 + base64 插入
 const tailwindJsBase64 = Buffer.from(tailwindJS, "utf8").toString("base64");
@@ -36,8 +40,8 @@ async function doCaptureHtmlstr(params: CaptureDto) {
     .replace(
       "{{tailwind_script}}",
       `<script>const s = atob('${tailwindJsBase64}'); eval(s);</script>`
-    );
-
+    )
+    .replace("{{board_stroke_plyer}}", `<script>${boardStrokePlyer}</script>`);
   // 开始截图
   await page.setContent(fullHtml); // 单页App推荐这个{ waitUntil: "networkidle" }：500ms内无网络请求才算完事
   // ✨ 等待一个渲染帧，确保 DOMContentLoaded 里的 canvas 绘制完成

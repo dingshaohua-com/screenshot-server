@@ -30,9 +30,9 @@ export async function getBrowser() {
 export async function getCtxAndPage(width?: number, height?: number) {
   const browser = await getBrowser();
   const context = await browser.newContext({
-    ignoreHTTPSErrors: true,
-    bypassCSP: true, // 绕过内容安全策略
-    javaScriptEnabled: true,
+    // ignoreHTTPSErrors: true,
+    // bypassCSP: true, // 绕过内容安全策略
+    // javaScriptEnabled: true,
   });
   const page = await context.newPage();
   if (width && height) {

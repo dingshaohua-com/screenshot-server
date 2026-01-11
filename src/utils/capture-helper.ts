@@ -15,7 +15,7 @@ const templateHtml = fs.readFileSync(
 );
 
 // 把 Tailwind 运行时内嵌，又不想再踩 escape 的坑(引号冲突、换行丢失)，用 CDATA 包装 + base64 插入
-const tailwindJsBase64 = Buffer.from(tailwindJS, 'utf8').toString('base64');
+const tailwindJsBase64 = Buffer.from(tailwindJS, "utf8").toString("base64");
 
 // 截图url
 async function doCaptureByUrl(params: CaptureDto) {
@@ -29,14 +29,19 @@ async function doCaptureByUrl(params: CaptureDto) {
 // 截图htmlStr
 async function doCaptureHtmlstr(params: CaptureDto) {
   const { context, page } = await getCtxAndPage(params.width, params.height);
-  
+
   // --- ✨ 准备 HTML ---
   const fullHtml = templateHtml
     .replace("{{html_content}}", params.htmlStr!)
-    .replace("{{tailwind_script}}", `<script>const s = atob('${tailwindJsBase64}'); eval(s);</script>`);
+    .replace(
+      "{{tailwind_script}}",
+      `<script>const s = atob('${tailwindJsBase64}'); eval(s);</script>`
+    );
 
   // 开始截图
-  await page.setContent(fullHtml);
+  await page.setContent(fullHtml); // 单页App推荐这个{ waitUntil: "networkidle" }：500ms内无网络请求才算完事
+  // ✨ 等待一个渲染帧，确保 DOMContentLoaded 里的 canvas 绘制完成
+  // await page.evaluate(() => new Promise(requestAnimationFrame));
   const buffer = await page.screenshot({ fullPage: true });
   await context.close();
   return buffer;

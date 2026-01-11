@@ -22,7 +22,7 @@ app.use(router.routes()).use(router.allowedMethods());
 launchBrowser();
 
 
-const PORT = Number(process.env.PORT || 3001);
+const PORT = Number(process.env.PORT || 3002);
 const server = app.listen(PORT, '0.0.0.0', () => {
 	logHelper.startServer(server);
 });

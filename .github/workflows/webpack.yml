@@ -21,7 +21,7 @@ jobs:
       - name: 安装Node
         uses: actions/setup-node@main
         with:
-          node-version: "22.x"
+          node-version: "24.x"
 
       - name: 安装依赖
         run: pnpm i
@@ -41,5 +41,5 @@ jobs:
             cd /home/apps-root/${{ env.PROJECT_NAME }}
             pnpm i
             pm2 list | grep -q "${{ env.PROJECT_NAME }}" && pm2 delete ${{ env.PROJECT_NAME }}
-            pm2 start "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1 npm run start" --name ${{ env.PROJECT_NAME }}
+            pm2 start "PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1 npm run start" --name ${{ env.PROJECT_NAME }} 
                 
